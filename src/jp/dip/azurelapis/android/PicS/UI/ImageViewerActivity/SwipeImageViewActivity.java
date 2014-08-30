@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import jp.dip.azurelapis.android.PicS.R;
 
 import java.util.List;
@@ -89,7 +90,7 @@ public class SwipeImageViewActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //まとめてダウンロードボタンが押された場合
         if (item.getTitle().equals(ALL_DOWNLOAD_BUTTON_TITILE)) {
-            //Toast.makeText(this, "うひょおおおおおお", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "まとめてダウンロードを開始しました", Toast.LENGTH_LONG).show();
 
 
             Thread thread = new Thread(new Runnable() {

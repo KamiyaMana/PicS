@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import jp.dip.azurelapis.android.PicS.R;
 
 /**
@@ -17,6 +18,9 @@ public class BrowserFragment extends Fragment {
     private OnLoadFinishWebPage onFinishLoadWebPage;
 
     private WebView webView;
+
+    private ImageButton backButton;
+    private ImageButton forwardButton;
 
     public BrowserFragment(){
 
@@ -41,6 +45,29 @@ public class BrowserFragment extends Fragment {
         this.webView = (WebView)view.findViewById(R.id.webView);
         this.initWebView(this.webView);
 
+        //ナビゲーションボタン関係
+        this.backButton = (ImageButton)view.findViewById(R.id.navigation_back_button_browser_fragment);
+
+        this.forwardButton = (ImageButton)view.findViewById(R.id.navigation_forward_button_browser_fragment);
+
+        //Clickリスナーの設定
+        //戻るボタン
+        this.backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
+
+
+        //進むボタン
+        this.forwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goForward();
+            }
+        });
+
         return view;
 
     }
@@ -53,6 +80,7 @@ public class BrowserFragment extends Fragment {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new PicSWebViewClient(this.onFinishLoadWebPage));
 
+
     }
 
     /**
@@ -60,7 +88,6 @@ public class BrowserFragment extends Fragment {
      * @return
      */
     public boolean canGoBack(){
-        boolean ret = false;
         return this.webView.canGoBack();
 
     }
@@ -71,6 +98,24 @@ public class BrowserFragment extends Fragment {
     public void goBack(){
         if(canGoBack()){
             this.webView.goBack();
+        }
+    }
+
+    /**
+     * 履歴から進むことが可能かを返す
+     * @return
+     */
+    public boolean canGoForward(){
+        return  this.webView.canGoForward();
+    }
+
+
+    /**
+     * browserの履歴から進む
+     */
+    public void goForward(){
+        if(this.webView.canGoForward()){
+            this.webView.goForward();
         }
     }
 
