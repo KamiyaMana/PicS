@@ -7,14 +7,24 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 import jp.dip.azurelapis.android.PicS.UI.MainOnPageChangeListnere;
 import jp.dip.azurelapis.android.PicS.UI.MainViewPagerAdapter;
 
 public class MainActivity extends FragmentActivity {
 
+    //サイドメニュー
+    private LinearLayout leftDrawableLinearLayout;
+    private ListView leftDrawarMenuListView;
+    private IconAndTextListViewAdapter leftDrowarListViewAdapter;
+
+    //メインコンテンツ部分
     private ViewPager mainViewPager;
     private MainViewPagerAdapter viewPagerAdapter;
+
     public static Context context;
 
     /**
@@ -27,6 +37,13 @@ public class MainActivity extends FragmentActivity {
         getWindow().requestFeature(android.view.Window.FEATURE_ACTION_MODE_OVERLAY);
 
         setContentView(R.layout.main);
+
+        //サイドメニューの初期化
+        this.leftDrawableLinearLayout = (LinearLayout)findViewById(R.id.drawer_layout);
+        this.leftDrawarMenuListView = (ListView)findViewById(R.id.left_drawer_menu_listview);
+        this.leftDrowarListViewAdapter = new IconAndTextListViewAdapter(this);
+        this.leftDrawarMenuListView.setAdapter(this.leftDrowarListViewAdapter);
+
 
         //ViewPagerの設定
         this.mainViewPager = (ViewPager)findViewById(R.id.main_view_pager);
@@ -42,6 +59,7 @@ public class MainActivity extends FragmentActivity {
         actionBar.addTab(actionBar.newTab().setText("ブラウザ").setTabListener(actionTabListnere));
         actionBar.addTab(actionBar.newTab().setText("画像").setTabListener(actionTabListnere));
         actionBar.addTab(actionBar.newTab().setText("テキスト").setTabListener(actionTabListnere));
+
 
         this.mainViewPager.setOnPageChangeListener(new MainOnPageChangeListnere(actionBar));
 
@@ -81,6 +99,7 @@ public class MainActivity extends FragmentActivity {
             //Toast.makeText(getApplicationContext(), "laoded !! " + html, Toast.LENGTH_LONG).show();
             viewPagerAdapter.refreshImageFragmnet(url,html);
             viewPagerAdapter.refreshTextFragmnet(url,html);
+            viewPagerAdapter.refreshBrowserFragmnet(url, html);
         }
     }
 

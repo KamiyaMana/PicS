@@ -41,9 +41,6 @@ public class ImageFragment extends Fragment {
 
         //this.imageCardListView.setOnItemSelectedListener(new ImageCardTouchListnere(getActivity(), ));
 
-
-
-
         return view;
     }
 

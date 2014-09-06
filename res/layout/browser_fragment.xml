@@ -11,10 +11,9 @@
                   android:layout_height="wrap_content"
             >
 
-        <View android:layout_width="0dp"
-              android:layout_height="0dp"
-              android:layout_weight="1"
-                />
+
+
+
 
         <ImageButton android:id="@+id/navigation_back_button_browser_fragment"
                 android:layout_width="48dp"
@@ -30,6 +29,22 @@
 
                 />
 
+        <EditText
+                android:id="@+id/url_text_edit_browser_fragment"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:singleLine="true"
+                android:scrollHorizontally="true"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                />
+
+        <ImageButton android:id="@+id/url_go_button_browser_fragment"
+                     android:layout_width="48dp"
+                     android:layout_height="48dp"
+                     android:src="@android:drawable/arrow_up_float"
+
+                />
 
         </LinearLayout>
 

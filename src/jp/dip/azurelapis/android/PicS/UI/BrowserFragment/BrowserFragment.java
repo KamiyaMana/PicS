@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import jp.dip.azurelapis.android.PicS.R;
 
@@ -21,6 +22,9 @@ public class BrowserFragment extends Fragment {
 
     private ImageButton backButton;
     private ImageButton forwardButton;
+
+    private ImageButton urlGoButton;
+    private EditText urlEditText;
 
     public BrowserFragment(){
 
@@ -50,6 +54,13 @@ public class BrowserFragment extends Fragment {
 
         this.forwardButton = (ImageButton)view.findViewById(R.id.navigation_forward_button_browser_fragment);
 
+        //URL表示EditText
+        this.urlEditText = (EditText)view.findViewById(R.id.url_text_edit_browser_fragment);
+
+        //URL横の進むボタン
+        this.urlGoButton = (ImageButton)view.findViewById(R.id.url_go_button_browser_fragment);
+
+
         //Clickリスナーの設定
         //戻るボタン
         this.backButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +79,20 @@ public class BrowserFragment extends Fragment {
             }
         });
 
+
+        //URL表示用EditText
+        this.urlEditText.setText(this.webView.getUrl());
+
+        //URL横の進むボタン
+        this.urlGoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(urlEditText.getText() != null) {
+                    webView.loadUrl(urlEditText.getText().toString());
+                }
+            }
+        });
+
         return view;
 
     }
@@ -76,9 +101,12 @@ public class BrowserFragment extends Fragment {
      * WebViewの初期設定を行う
      */
     private void initWebView(WebView webView){
+
         webView.loadUrl("https://www.google.co.jp/");
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new PicSWebViewClient(this.onFinishLoadWebPage));
+        PicSWebViewClient webViewClient = new PicSWebViewClient(this.onFinishLoadWebPage);
+
+        webView.setWebViewClient(webViewClient);
 
 
     }
@@ -116,6 +144,17 @@ public class BrowserFragment extends Fragment {
     public void goForward(){
         if(this.webView.canGoForward()){
             this.webView.goForward();
+        }
+    }
+
+    /**
+     *ページのロードが終わった時の処理を記述する
+     * @param url
+     */
+    public void onFinishLoadPage(String url){
+        if(url != null) {
+            this.urlEditText.setText(url);
+            webView.clearCache(false);
         }
     }
 

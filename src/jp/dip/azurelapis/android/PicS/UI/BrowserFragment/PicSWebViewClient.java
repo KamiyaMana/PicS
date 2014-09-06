@@ -13,10 +13,13 @@ public class PicSWebViewClient extends WebViewClient {
     private String html;
     private OnLoadFinishWebPage onLoadFinishWebPage;
 
+
     public PicSWebViewClient(OnLoadFinishWebPage onLoadFinishWebPage) {
 
         this.onLoadFinishWebPage = onLoadFinishWebPage;
     }
+
+
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {

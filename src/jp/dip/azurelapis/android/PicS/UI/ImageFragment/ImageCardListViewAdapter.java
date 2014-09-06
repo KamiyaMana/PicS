@@ -69,7 +69,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
      * 複数の画像をまとめてセットする
      * すべてデータを追加してから再描画するので描画処理が軽くなる
      */
-    public void setImageList(List<URL> imageURLs) {
+    public synchronized void setImageList(List<URL> imageURLs) {
         clearImages();
         this.lastIndex = -1;
         this.imageURLs = imageURLs;
@@ -143,7 +143,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, final ViewGroup viewGroup) {
+    public synchronized View getView(int i, View view, final ViewGroup viewGroup) {
+
+
         if (view == null) {
             view = View.inflate(this.context, R.layout.image_card_row, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
@@ -187,7 +189,12 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         final ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
         if (cacheBitmap == null) {
             File imageFile = loader.getDiskCache().get(imageURL.toString());
-            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString());
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = false;
+
+            options.inSampleSize = 2;
+
+            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
             //BitmapDrawable drawableBitmap = new BitmapDrawable();
         }
 
@@ -199,7 +206,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         } else {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 1024;
+            options.inSampleSize = 2;
             options.inScaled = true;
             options.inPurgeable = true;
             options.inPreferredConfig = Bitmap.Config.RGB_565;

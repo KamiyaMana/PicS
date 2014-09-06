@@ -38,14 +38,16 @@ import java.io.File;
  * Created by kamiyama on 2014/07/21.
  * スワイプして画面を移動できるImageViewr用Fragment
  */
-public class SwipeImageViewFragment extends Fragment{
+public class SwipeImageViewFragment extends Fragment {
+
+
     private PhotoViewAttacher photViewAttacher;
 
     private ImageView imageView;
 
     private String imageUrl;
 
-    public SwipeImageViewFragment(String url){
+    public SwipeImageViewFragment(String url) {
         this.imageUrl = url;
 
     }
@@ -53,11 +55,10 @@ public class SwipeImageViewFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.swipe_image_viewer_fragment, container,false);
+        final View view = inflater.inflate(R.layout.swipe_image_viewer_fragment, container, false);
 
 
-
-        this.imageView = (ImageView)view.findViewById(R.id.image_view_swipe_image_view_fragment);
+        this.imageView = (ImageView) view.findViewById(R.id.image_view_swipe_image_view_fragment);
         //System.out.println("ggg" + this.imageView);
         this.photViewAttacher = new PhotoViewAttacher(imageView);
 
@@ -72,7 +73,15 @@ public class SwipeImageViewFragment extends Fragment{
 
         if (cacheBitmap == null) {
             File imageFile = loader.getDiskCache().get(imageURL);
-            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString());
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = false;
+
+            options.inSampleSize = 2;
+
+            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+
+
             //BitmapDrawable drawableBitmap = new BitmapDrawable();
         }
 
@@ -87,7 +96,7 @@ public class SwipeImageViewFragment extends Fragment{
         } else {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 1024;
+            options.inSampleSize = 2;
             options.inScaled = true;
             options.inPurgeable = true;
             options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -152,7 +161,7 @@ public class SwipeImageViewFragment extends Fragment{
             @Override
             public boolean onLongClick(View view) {
                 DialogFragment dialog = new popuoMenu();
-                dialog.show(getFragmentManager(),"imagemenu");
+                dialog.show(getFragmentManager(), "imagemenu");
                 return false;
             }
         });
@@ -163,19 +172,19 @@ public class SwipeImageViewFragment extends Fragment{
     /**
      * ImageViewに表示する画像のセットをする
      */
-    public void setImage(Drawable image){
+    public void setImage(Drawable image) {
         this.photViewAttacher.getImageView().setImageDrawable(image);
 
     }
 
-    public ImageView getImageView(){
+    public ImageView getImageView() {
         return this.imageView;
     }
 
     /**
      * 画像長押しで表示されるポップアップメニュー
      */
-    private class popuoMenu extends DialogFragment{
+    private class popuoMenu extends DialogFragment {
 
         private static final String IMAGE_DOWNLOAD_MENU_TEXT = "画像を保存";
 
@@ -184,29 +193,29 @@ public class SwipeImageViewFragment extends Fragment{
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             //ポップアップメニューに表示する内容を表示するView
-            View menuView = View.inflate(getActivity(),R.layout.popup_photoview_menu ,null);
+            View menuView = View.inflate(getActivity(), R.layout.popup_photoview_menu, null);
 
             //メニュー一覧を表示するリストビュー
-            ListView menuListView = (ListView)menuView.findViewById(R.id.menulistview_popup_photoview_menu);
+            ListView menuListView = (ListView) menuView.findViewById(R.id.menulistview_popup_photoview_menu);
 
             IconAndTextListViewAdapter iconAndTextListViewAdapter = new IconAndTextListViewAdapter(getActivity());
 
             Resources res = getResources();
-            Bitmap saveIcon = BitmapFactory.decodeResource(res,android.R.drawable.ic_menu_save);
+            Bitmap saveIcon = BitmapFactory.decodeResource(res, android.R.drawable.ic_menu_save);
 
             iconAndTextListViewAdapter.addMenuItem(new IconAndTextData(new BitmapDrawable(saveIcon),
-                   IMAGE_DOWNLOAD_MENU_TEXT));
+                    IMAGE_DOWNLOAD_MENU_TEXT));
             menuListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    if(i == 0){
+                    if (i == 0) {
                         //画像を保存するメニューが押された
                         Uri uri = Uri.parse(imageUrl);
                         DownloadManager.Request request = new DownloadManager.Request(uri);
 
                         //保存ファイル名
                         String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length());
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,fileName);
+                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                         request.setTitle(fileName);
 
                         //DLに使う回線種別
@@ -231,7 +240,6 @@ public class SwipeImageViewFragment extends Fragment{
             menuListView.setAdapter(iconAndTextListViewAdapter);
 
 
-
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             // タイトル
@@ -242,7 +250,6 @@ public class SwipeImageViewFragment extends Fragment{
             builder.setPositiveButton("閉じる", null);
 
             Dialog dialog = builder.create();
-
 
 
             return dialog;

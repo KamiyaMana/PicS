@@ -102,10 +102,15 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
 
     }
 
-    /**
-     * 表示中のBrowserフラグメントを返す
-     * @return
-     */
+    public void refreshBrowserFragmnet(final String url, final String html) {
+        browserFragment.onFinishLoadPage(url);
+
+    }
+
+        /**
+         * 表示中のBrowserフラグメントを返す
+         * @return
+         */
     public BrowserFragment getBrowserFragment(){
         return this.browserFragment;
     }
