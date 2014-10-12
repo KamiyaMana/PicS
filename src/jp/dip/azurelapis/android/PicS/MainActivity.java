@@ -39,10 +39,11 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.main);
 
         //サイドメニューの初期化
-        this.leftDrawableLinearLayout = (LinearLayout)findViewById(R.id.drawer_layout);
+        this.leftDrawableLinearLayout = (LinearLayout)findViewById(R.id.left_drawer);
         this.leftDrawarMenuListView = (ListView)findViewById(R.id.left_drawer_menu_listview);
         this.leftDrowarListViewAdapter = new IconAndTextListViewAdapter(this);
         this.leftDrawarMenuListView.setAdapter(this.leftDrowarListViewAdapter);
+
 
 
         //ViewPagerの設定

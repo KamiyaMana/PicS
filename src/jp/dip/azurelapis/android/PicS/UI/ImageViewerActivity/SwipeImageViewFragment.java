@@ -47,21 +47,24 @@ public class SwipeImageViewFragment extends Fragment {
 
     private String imageUrl;
 
+    public SwipeImageViewFragment(){
+
+    }
+
     public SwipeImageViewFragment(String url) {
         this.imageUrl = url;
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.swipe_image_viewer_fragment, container, false);
 
-
         this.imageView = (ImageView) view.findViewById(R.id.image_view_swipe_image_view_fragment);
         //System.out.println("ggg" + this.imageView);
         this.photViewAttacher = new PhotoViewAttacher(imageView);
-
 
         //画像URLを準備
         final String imageURL = this.imageUrl;
@@ -74,15 +77,16 @@ public class SwipeImageViewFragment extends Fragment {
         if (cacheBitmap == null) {
             File imageFile = loader.getDiskCache().get(imageURL);
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = false;
+            if(imageFile.exists()){
 
-            options.inSampleSize = 2;
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = false;
 
-            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+                options.inSampleSize = 2;
 
+                cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+            }
 
-            //BitmapDrawable drawableBitmap = new BitmapDrawable();
         }
 
 

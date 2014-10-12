@@ -102,8 +102,8 @@ public class BrowserFragment extends Fragment {
      */
     private void initWebView(WebView webView){
 
-        webView.loadUrl("https://www.google.co.jp/");
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("https://www.google.co.jp/");
         PicSWebViewClient webViewClient = new PicSWebViewClient(this.onFinishLoadWebPage);
 
         webView.setWebViewClient(webViewClient);
