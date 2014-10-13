@@ -52,7 +52,7 @@ public class HtmlParse {
 
     }
 
-    public static List<TextCardData> getTextCardDatas(String pageUrl){
+    public static List<TextCardData> gtTextCardDatas(String pageUrl){
 
         List<TextCardData> textCardDatas = new ArrayList<TextCardData>();
 

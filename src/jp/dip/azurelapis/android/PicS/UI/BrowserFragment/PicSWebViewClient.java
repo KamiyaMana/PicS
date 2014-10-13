@@ -24,6 +24,10 @@ public class PicSWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+        if(onLoadFinishWebPage == null){
+            return;
+        }
+
         onLoadFinishWebPage.onLoadFinishWebPage(url, this.getHtml());
     }
 

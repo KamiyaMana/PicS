@@ -3,10 +3,12 @@ package jp.dip.azurelapis.android.PicS;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
+import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
@@ -62,8 +64,49 @@ public class MainActivity extends FragmentActivity {
         actionBar.addTab(actionBar.newTab().setText("テキスト").setTabListener(actionTabListnere));
 
 
+        //actionbarの背景色
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(Color.parseColor("#283593")));
+
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.browser_navigation);
+
         this.mainViewPager.setOnPageChangeListener(new MainOnPageChangeListnere(actionBar));
 
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        //Browserナビゲーション関係
+        //戻る
+        MenuItem actionBackItem = menu.add("← 戻る");
+        actionBackItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        actionBackItem.setIcon(android.R.drawable.ic_media_previous);
+        actionBackItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                viewPagerAdapter.getBrowserFragment().goBack();
+                return false;
+            }
+        });
+
+
+        //進む
+        MenuItem actionNextItem = menu.add("進む →");
+        actionNextItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        actionNextItem.setIcon(android.R.drawable.ic_media_next);
+        actionNextItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                viewPagerAdapter.getBrowserFragment().goForward();
+                return false;
+            }
+        });
+
+
+        return true;
     }
 
 

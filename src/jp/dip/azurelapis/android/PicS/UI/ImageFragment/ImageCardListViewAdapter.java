@@ -61,7 +61,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public List<URL> getImageUrls(){
+    public List<URL> getImageUrls() {
         return this.imageURLs;
     }
 
@@ -91,9 +91,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private List<String> converInageUrl(List<URL> imageURL){
+    private List<String> converInageUrl(List<URL> imageURL) {
         List<String> urlStrings = new ArrayList<String>();
-        for(URL url : imageURL){
+        for (URL url : imageURL) {
             urlStrings.add(url.toString());
         }
 
@@ -161,118 +161,127 @@ public class ImageCardListViewAdapter extends BaseAdapter {
             ImageCardCache.imageFileURLTextView = imageFileURLTextView;
         }
 
-        //画像のURL
-        final URL imageURL = this.imageURLs.get(i);
-        if (imageURL == null) {
-            view.setVisibility(View.INVISIBLE);
-
-            return view;
-        } else {
-
-        }
 
 
-        ImageCardCache.imageFileURLTextView.setText(imageURL.toString());
-        //TextView textView = (TextView)view.findViewById(R.id.image_card_row_image_uri_textview);
-        ///textView.setText(imageURL.toString());
+            //画像のURL
+            final URL imageURL = this.imageURLs.get(i);
+        try {
+            if (imageURL == null) {
+                view.setVisibility(View.INVISIBLE);
 
-        ImageCardCache.imageFileNameTextView.setText(UrlUtiles.getFileNameFromUrl(imageURL.getFile()));
+                return view;
+            } else {
 
-
-        //画像をセット
-        ImageLoader loader = ImageLoader.getInstance();
-
-
-        final TextView finalImageFIleSizeTextView = (TextView) view.findViewById(R.id.image_card_row_image_filesize_textview);
-        Bitmap cacheBitmap = loader.getMemoryCache().get(imageURL.toString());//MemoryCacheUtil.findCachedBitmapsForImageUri(finalImageUrl, ImageLoader.getInstance().getMemoryCache());
-
-        final ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
-        if (cacheBitmap == null) {
-            File imageFile = loader.getDiskCache().get(imageURL.toString());
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = false;
-
-            options.inSampleSize = 2;
-
-            cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
-            //BitmapDrawable drawableBitmap = new BitmapDrawable();
-        }
-
-        imageView.setTag(imageURL.toString());
-        if (cacheBitmap != null) {
-            imageView.setImageBitmap(cacheBitmap);
-            finalImageFIleSizeTextView.setText((cacheBitmap.getByteCount()/1000f) + " KB");
-
-        } else {
-
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            options.inScaled = true;
-            options.inPurgeable = true;
-            options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-            DisplayImageOptions dispConf = new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .showImageOnFail(android.R.drawable.stat_notify_error)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .resetViewBeforeLoading(true)
-                    .decodingOptions(options)
-                            //.imageScaleType(ImageScaleType.EXACTLY)
-                            //.displayer(new FadeInBitmapDisplayer(300))
-                    .cacheOnDisk(true)
-                    .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                    .build();
+            }
 
 
-            final View finalRowView = view;
-            finalRowView.setTag(imageURL.toString());
-            loader.displayImage(imageURL.toString(), imageView, dispConf, new ImageLoadingListener() {
-                @Override
-                public void onLoadingStarted(String s, View view) {
+            ImageCardCache.imageFileURLTextView.setText(imageURL.toString());
+            //TextView textView = (TextView)view.findViewById(R.id.image_card_row_image_uri_textview);
+            ///textView.setText(imageURL.toString());
 
-                }
+            ImageCardCache.imageFileNameTextView.setText(UrlUtiles.getFileNameFromUrl(imageURL.getFile()));
 
-                @Override
-                public void onLoadingFailed(String s, View view, FailReason failReason) {
-                    if (view.getTag().equals(imageURL.toString())) {
-                        if (finalRowView.getVisibility() == View.VISIBLE
-                                && finalRowView.getTag().equals(imageURL.toString())) {
-                            finalRowView.setVisibility(View.INVISIBLE);
-                        } else {
-                        }
+
+            //画像をセット
+            ImageLoader loader = ImageLoader.getInstance();
+
+
+            final TextView finalImageFIleSizeTextView = (TextView) view.findViewById(R.id.image_card_row_image_filesize_textview);
+            Bitmap cacheBitmap = loader.getMemoryCache().get(imageURL.toString());//MemoryCacheUtil.findCachedBitmapsForImageUri(finalImageUrl, ImageLoader.getInstance().getMemoryCache());
+
+            final ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
+            if (cacheBitmap == null) {
+                File imageFile = loader.getDiskCache().get(imageURL.toString());
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = false;
+
+                options.inSampleSize = 2;
+
+                cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+                //BitmapDrawable drawableBitmap = new BitmapDrawable();
+            }
+
+            imageView.setTag(imageURL.toString());
+            if (cacheBitmap != null) {
+                imageView.setImageBitmap(cacheBitmap);
+                finalImageFIleSizeTextView.setText((cacheBitmap.getByteCount() / 1000f) + " KB");
+
+            } else {
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                options.inScaled = true;
+                options.inPurgeable = true;
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+
+                DisplayImageOptions dispConf = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true)
+                        .showImageOnFail(android.R.drawable.stat_notify_error)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .resetViewBeforeLoading(true)
+                        .decodingOptions(options)
+                                //.imageScaleType(ImageScaleType.EXACTLY)
+                                //.displayer(new FadeInBitmapDisplayer(300))
+                        .cacheOnDisk(true)
+                        .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                        .build();
+
+
+                final View finalRowView = view;
+                finalRowView.setTag(imageURL.toString());
+
+
+                loader.displayImage(imageURL.toString(), imageView, dispConf, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String s, View view) {
+
                     }
 
-                }
-
-                @Override
-                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                    if (view.getTag().equals(imageURL.toString())) {
-                        if (finalRowView.getVisibility() == View.INVISIBLE
-                                && finalRowView.getTag().equals(imageURL.toString())) {
-                            //view.setLayoutParams(new ViewGroup.LayoutParams(context,ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,view.getLayoutParams()));
-                            view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-                            view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-                            view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                            finalRowView.setVisibility(View.VISIBLE);
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+                        if (view.getTag().equals(imageURL.toString())) {
+                            if (finalRowView.getVisibility() == View.VISIBLE
+                                    && finalRowView.getTag().equals(imageURL.toString())) {
+                                finalRowView.setVisibility(View.INVISIBLE);
+                            } else {
+                            }
                         }
 
                     }
-                    finalImageFIleSizeTextView.setText((bitmap.getByteCount()/1000f) + " byte");
+
+                    @Override
+                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                        if (view.getTag().equals(imageURL.toString())) {
+                            if (finalRowView.getVisibility() == View.INVISIBLE
+                                    && finalRowView.getTag().equals(imageURL.toString())) {
+                                //view.setLayoutParams(new ViewGroup.LayoutParams(context,ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,view.getLayoutParams()));
+                                view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                                view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                                view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                finalRowView.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+                        finalImageFIleSizeTextView.setText((bitmap.getByteCount() / 1000f) + " byte");
 
 
-                }
+                    }
 
-                @Override
-                public void onLoadingCancelled(String s, View view) {
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
 
-                }
-            });
+                    }
+                });
 
-            ImageCardCache.imageView.setVisibility(View.VISIBLE);
-            ImageCardCache.imageView.refreshDrawableState();
-            //Toast.makeText(this.context, ">>> " + imageURL.toString(), Toast.LENGTH_LONG).show();
 
+                ImageCardCache.imageView.setVisibility(View.VISIBLE);
+                ImageCardCache.imageView.refreshDrawableState();
+                //Toast.makeText(this.context, ">>> " + imageURL.toString(), Toast.LENGTH_LONG).show();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         //アニメーション

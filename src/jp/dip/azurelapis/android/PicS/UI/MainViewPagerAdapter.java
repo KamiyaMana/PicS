@@ -84,7 +84,7 @@ public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
         AsyncTask<Void, Void, List<TextCardData>> asyncTask = new AsyncTask<Void, Void, List<TextCardData>>() {
             @Override
             protected List<TextCardData> doInBackground(Void... voids) {
-                return HtmlParse.getTextCardDatas(url);
+                return HtmlParse.gtTextCardDatas(url);
 
             }
 
