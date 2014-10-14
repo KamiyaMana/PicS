@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -162,9 +161,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         }
 
 
+        //画像のURL
+        final URL imageURL = this.imageURLs.get(i);
 
-            //画像のURL
-            final URL imageURL = this.imageURLs.get(i);
         try {
             if (imageURL == null) {
                 view.setVisibility(View.INVISIBLE);
@@ -192,12 +191,14 @@ public class ImageCardListViewAdapter extends BaseAdapter {
             final ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
             if (cacheBitmap == null) {
                 File imageFile = loader.getDiskCache().get(imageURL.toString());
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = false;
+                if (imageFile.exists()) {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
 
-                options.inSampleSize = 2;
+                    options.inSampleSize = 4;
 
-                cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+                    cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+                }
                 //BitmapDrawable drawableBitmap = new BitmapDrawable();
             }
 
@@ -209,7 +210,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
             } else {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
+                options.inSampleSize = 4;
                 options.inScaled = true;
                 options.inPurgeable = true;
                 options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -255,10 +256,10 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                             if (finalRowView.getVisibility() == View.INVISIBLE
                                     && finalRowView.getTag().equals(imageURL.toString())) {
                                 //view.setLayoutParams(new ViewGroup.LayoutParams(context,ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,view.getLayoutParams()));
-                                view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-                                view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                                //view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                                //view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-                                view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                //view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 finalRowView.setVisibility(View.VISIBLE);
                             }
 

@@ -77,16 +77,19 @@ public class SwipeImageViewFragment extends Fragment {
         if (cacheBitmap == null) {
             File imageFile = loader.getDiskCache().get(imageURL);
 
-            if(imageFile.exists()){
+            if(imageFile.exists()) {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = false;
 
-                options.inSampleSize = 2;
+                options.inSampleSize = 4;
+                try {
+                    cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
 
-                cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-
         }
 
 
@@ -100,7 +103,7 @@ public class SwipeImageViewFragment extends Fragment {
         } else {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
+            options.inSampleSize = 4;
             options.inScaled = true;
             options.inPurgeable = true;
             options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -146,7 +149,7 @@ public class SwipeImageViewFragment extends Fragment {
 
                     }*/
                     photViewAttacher.cleanup();
-                    imageView.setImageDrawable(new BitmapDrawable(bitmap));
+                    imageView.setImageBitmap(bitmap);
                     photViewAttacher = new PhotoViewAttacher(imageView);
                 }
 
@@ -188,7 +191,7 @@ public class SwipeImageViewFragment extends Fragment {
     /**
      * 画像長押しで表示されるポップアップメニュー
      */
-    private class popuoMenu extends DialogFragment {
+    public class popuoMenu extends DialogFragment {
 
         private static final String IMAGE_DOWNLOAD_MENU_TEXT = "画像を保存";
 
