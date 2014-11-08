@@ -7,15 +7,15 @@
 
     <ImageView
             android:id="@+id/icon_imageview_icon_and_text_menu_row"
-            android:layout_height="48dp"
-            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:layout_width="32dp"
             />
 
     <TextView
             android:id="@+id/textview_icon_and_text_menu_row"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textSize="24sp"
+            android:textSize="18sp"
             />
 
 </LinearLayout>

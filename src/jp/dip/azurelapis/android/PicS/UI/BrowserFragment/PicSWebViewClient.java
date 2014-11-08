@@ -37,10 +37,10 @@ public class PicSWebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         view.addJavascriptInterface(this, "web");
-        //view.loadUrl("javascript:window.web.setHtml(document.documentElement.outerHTML);");
 
-        //onLoadFinishWebPage.onLoadFinishWebPage(view.getUrl(), this.getHtml());
     }
+
+
 
     /**
      * 表示中のWebページのHTMｌを返す

@@ -1,5 +1,7 @@
 package jp.dip.azurelapis.android.PicS.Datas.BookMark;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 /**
@@ -8,15 +10,21 @@ import java.util.Date;
  */
 public class BookMark {
 
+    private int id;
     private String url;
     private String titile;
     private Date addData;
+    private Bitmap icon;
 
     public BookMark(){
 
     }
 
     //セッター
+    public void setId(int id){
+        this.id = id;
+    }
+
     public void setUrl(String url) {
         this.url = url;
     }
@@ -29,7 +37,15 @@ public class BookMark {
         this.addData = addData;
     }
 
+    public void setIcon(Bitmap bitmap){
+        this.icon = bitmap;
+    }
+
     //ゲッター
+    public int getId(){
+        return this.id;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -41,4 +57,10 @@ public class BookMark {
     public Date getAddData() {
         return addData;
     }
+
+    public Bitmap getIcon() {
+        return icon;
+    }
 }
+
+

@@ -71,5 +71,12 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
         return view;
     }
 
+    /**
+     * すべてのアイテムを削除する
+     */
+    public void clear(){
+        iconAndTextDatas.clear();
+    }
+
 
 }

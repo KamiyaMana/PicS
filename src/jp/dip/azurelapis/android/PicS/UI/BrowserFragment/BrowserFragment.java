@@ -2,6 +2,7 @@ package jp.dip.azurelapis.android.PicS.UI.BrowserFragment;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -125,6 +126,8 @@ public class BrowserFragment extends Fragment {
 
     }
 
+
+
     /**
      * WebViewの初期設定を行う
      */
@@ -138,6 +141,12 @@ public class BrowserFragment extends Fragment {
 
 
     }
+
+    public void loadPage(String url){
+        this.webView.loadUrl(url);
+
+    }
+
 
     /**
      * 現在のWebViewが戻れるかどうかを返す
@@ -184,6 +193,31 @@ public class BrowserFragment extends Fragment {
             this.urlEditText.setText(url);
             webView.clearCache(false);
         }
+    }
+
+    /**
+     * 今表示しているページのタイトルを返す
+     * @return
+     */
+    public String getPageTitle(){
+        return this.webView.getTitle();
+    }
+
+
+    /**
+     * 今表示しているページのURLを返す
+     * @return
+     */
+    public String getUrl(){
+        return this.webView.getUrl();
+    }
+
+    /**
+     * ページのアイコンを返す
+     * @return
+     */
+    public Bitmap getFavcon(){
+        return this.webView.getFavicon();
     }
 
 }
