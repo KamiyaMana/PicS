@@ -195,7 +195,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
 
-                    options.inSampleSize = 4;
+                    //options.inSampleSize = 4;
 
                     cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
                 }
@@ -210,7 +210,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
             } else {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
+                //options.inSampleSize = 4;
                 options.inScaled = true;
                 options.inPurgeable = true;
                 options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -306,8 +306,6 @@ public class ImageCardListViewAdapter extends BaseAdapter {
      */
     private static class ImageCardCache {
 
-        private static ImageCardCache instance;
-
         //メインのImageView
         public static ImageView imageView;
 
@@ -316,14 +314,6 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         public static TextView imageFileSizeTextView;
 
         public static TextView imageFileURLTextView;
-
-        /**
-         * コンストラクタ
-         */
-        private ImageCardCache() {
-
-        }
-
 
     }
 }

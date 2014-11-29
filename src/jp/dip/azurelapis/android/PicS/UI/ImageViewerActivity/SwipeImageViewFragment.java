@@ -28,7 +28,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import jp.dip.azurelapis.android.PicS.R;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndUrlData;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -82,7 +82,7 @@ public class SwipeImageViewFragment extends Fragment {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = false;
 
-                options.inSampleSize = 4;
+                //options.inSampleSize = 4;
                 try {
                     cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
 
@@ -103,7 +103,7 @@ public class SwipeImageViewFragment extends Fragment {
         } else {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
+            //options.inSampleSize = 4;
             options.inScaled = true;
             options.inPurgeable = true;
             options.inPreferredConfig = Bitmap.Config.RGB_565;
@@ -210,8 +210,8 @@ public class SwipeImageViewFragment extends Fragment {
             Resources res = getResources();
             Bitmap saveIcon = BitmapFactory.decodeResource(res, android.R.drawable.ic_menu_save);
 
-            iconAndTextListViewAdapter.addMenuItem(new IconAndTextData(new BitmapDrawable(saveIcon),
-                    IMAGE_DOWNLOAD_MENU_TEXT));
+            iconAndTextListViewAdapter.addMenuItem(new IconAndUrlData(new BitmapDrawable(saveIcon),
+                    IMAGE_DOWNLOAD_MENU_TEXT, null));
             menuListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

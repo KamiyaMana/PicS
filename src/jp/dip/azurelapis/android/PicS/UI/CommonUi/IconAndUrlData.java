@@ -9,14 +9,16 @@ import android.graphics.drawable.Drawable;
 /**
  * アイコンとテキストの組み合わせを示すクラス
  */
-public class IconAndTextData{
+public class IconAndUrlData {
 
     private Drawable icon;
     private String text;
+    private String url;
 
-    public IconAndTextData(Drawable icon, String text){
+    public IconAndUrlData(Drawable icon, String text, String url){
         this.icon = icon;
         this.text = text;
+        this.url = url;
     }
 
     public Drawable getIcon() {
@@ -25,5 +27,9 @@ public class IconAndTextData{
 
     public String getText() {
         return text;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

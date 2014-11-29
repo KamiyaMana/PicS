@@ -1,8 +1,11 @@
 package jp.dip.azurelapis.android.PicS;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,8 +26,8 @@ import android.widget.ListView;
 import jp.dip.azurelapis.android.PicS.Datas.BookMark.BookMark;
 import jp.dip.azurelapis.android.PicS.Datas.DatabaseUtils.BookMarkDataBaseUtils;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndUrlData;
 import jp.dip.azurelapis.android.PicS.UI.MainOnPageChangeListnere;
 import jp.dip.azurelapis.android.PicS.UI.MainViewPagerAdapter;
 
@@ -59,18 +64,20 @@ public class MainActivity extends FragmentActivity {
         WebIconDatabase.getInstance().open(getDir("icons", MODE_PRIVATE).getPath());
 
         //サイドメニューの初期化
-        this.lefitSideDrawarLayoyt = (DrawerLayout)findViewById(R.id.left_side_menu_drawer_layout);
-        this.leftDrawableLinearLayout = (LinearLayout)findViewById(R.id.left_drawer);
-        this.leftDrawarMenuListView = (ListView)findViewById(R.id.left_drawer_menu_listview);
-        this.leftDrowarListViewAdapter = new IconAndTextListViewAdapter(this);
+        this.lefitSideDrawarLayoyt = (DrawerLayout) findViewById(R.id.left_side_menu_drawer_layout);
+        this.leftDrawableLinearLayout = (LinearLayout) findViewById(R.id.left_drawer);
+        this.leftDrawarMenuListView = (ListView) findViewById(R.id.left_drawer_menu_listview);
+
+        IconAndTextListViewAdapter iconAndTextListViewAdapter = new IconAndTextListViewAdapter(this);
+        this.leftDrowarListViewAdapter = iconAndTextListViewAdapter;
+
         this.initSideMenuList(this.leftDrowarListViewAdapter);
         this.initSideMenuListView(this.leftDrawarMenuListView);
         this.leftDrawarMenuListView.setAdapter(this.leftDrowarListViewAdapter);
 
 
-
         //ViewPagerの設定
-        this.mainViewPager = (ViewPager)findViewById(R.id.main_view_pager);
+        this.mainViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         this.viewPagerAdapter = new MainViewPagerAdapter(new OnWebPageLoaded(), getSupportFragmentManager());
         this.mainViewPager.setAdapter(this.viewPagerAdapter);
         this.mainViewPager.setOffscreenPageLimit(3);
@@ -97,16 +104,21 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+
+
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         if (android.R.id.home == item.getItemId()) {
             // アプリアイコンがタップされたときの処理
 
             if (this.lefitSideDrawarLayoyt.isDrawerOpen(Gravity.LEFT)) {
-                this.lefitSideDrawarLayoyt.closeDrawer(Gravity.LEFT);
-            }else{
-                this.lefitSideDrawarLayoyt.openDrawer(Gravity.LEFT);
 
+                //ドロワーが開いてる時は閉じる
+                this.lefitSideDrawarLayoyt.closeDrawer(Gravity.LEFT);
+            } else {
+
+                //ドロワーが閉じている時は開く
+                this.lefitSideDrawarLayoyt.openDrawer(Gravity.LEFT);
             }
         }
 
@@ -175,12 +187,11 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-
-    private class ActionTabListnere implements ActionBar.TabListener{
+    private class ActionTabListnere implements ActionBar.TabListener {
 
         private ViewPager viewPager;
 
-        public ActionTabListnere(ViewPager viewPager){
+        public ActionTabListnere(ViewPager viewPager) {
             this.viewPager = viewPager;
         }
 
@@ -201,13 +212,13 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    private class OnWebPageLoaded implements OnLoadFinishWebPage{
+    private class OnWebPageLoaded implements OnLoadFinishWebPage {
 
         @Override
-        public void onLoadFinishWebPage(String url,String html) {
+        public void onLoadFinishWebPage(String url, String html) {
             //Toast.makeText(getApplicationContext(), "laoded !! " + html, Toast.LENGTH_LONG).show();
-            viewPagerAdapter.refreshImageFragmnet(url,html);
-            viewPagerAdapter.refreshTextFragmnet(url,html);
+            viewPagerAdapter.refreshImageFragmnet(url, html);
+            viewPagerAdapter.refreshTextFragmnet(url, html);
             viewPagerAdapter.refreshBrowserFragmnet(url, html);
         }
     }
@@ -219,7 +230,7 @@ public class MainActivity extends FragmentActivity {
                 && this.viewPagerAdapter.getBrowserFragment().canGoBack()) {
             this.viewPagerAdapter.getBrowserFragment().goBack();
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -229,9 +240,10 @@ public class MainActivity extends FragmentActivity {
     /**
      * サイドメニューの初期化処理をする
      */
-    private void initSideMenuList(final IconAndTextListViewAdapter menuListAdapter){
+    private void initSideMenuList(final IconAndTextListViewAdapter menuListAdapter) {
 
-        AsyncTask<Void,Void,Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+        //サイドメニュー生成
+        AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 menuListAdapter.clear();
@@ -239,19 +251,20 @@ public class MainActivity extends FragmentActivity {
                 BookMarkDataBaseUtils bookmarkDB = new BookMarkDataBaseUtils(context);
                 bookmarks = bookmarkDB.selectAllBookMark();
 
-                for(BookMark bookMark : bookmarks){
+                for (BookMark bookMark : bookmarks) {
 
                     String menuText = bookMark.getTitile();
+                    String menuUrl = bookMark.getUrl();
                     Bitmap iconBitmap = bookMark.getIcon();
 
-                    Drawable icon = context.getResources().getDrawable(android.R.drawable.star_big_on);
+                    Drawable icon = context.getResources().getDrawable(android.R.drawable.btn_star_big_off);
 
-                    if(iconBitmap != null){
+                    if (iconBitmap != null) {
                         icon = new BitmapDrawable(iconBitmap);
                     }
 
-                    IconAndTextData iconAndTextData = new IconAndTextData(icon, menuText);
-                    menuListAdapter.addMenuItem(iconAndTextData);
+                    IconAndUrlData iconAndUrlData = new IconAndUrlData(icon, menuText, menuUrl);
+                    menuListAdapter.addMenuItem(iconAndUrlData);
                 }
 
                 return null;
@@ -266,14 +279,17 @@ public class MainActivity extends FragmentActivity {
         };
 
         asyncTask.execute();
+
+
     }
 
 
     /**
      * ListViewの初期化をする
+     *
      * @param menuListview
      */
-    private void initSideMenuListView(ListView menuListview){
+    private void initSideMenuListView(ListView menuListview) {
         menuListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -286,15 +302,58 @@ public class MainActivity extends FragmentActivity {
         menuListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                BookMark bookMark = bookmarks.get(i);
-                BookMarkDataBaseUtils bookMarkDataBaseUtils = new BookMarkDataBaseUtils(context);
-                bookMarkDataBaseUtils.deletBookMark(bookMark.getId());
-                initSideMenuList(leftDrowarListViewAdapter);
-                return false;
+
+                final BookMark bookMark = bookmarks.get(i);
+                final String message = "ブックマークを削除しますか？" +
+                        "\n" +
+                        "\n" +
+                        "\n" +
+                        bookMark.getTitile() +
+                        "\n" +
+                        "\n" +
+                        bookMark.getUrl();
+
+                DialogFragment dialogFragment = new DialogFragment() {
+
+                    @NonNull
+                    @Override
+                    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("確認")
+                                .setMessage(message)
+                                .setPositiveButton("削除", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        //ブックマークを削除する
+                                        BookMarkDataBaseUtils bookMarkDataBaseUtils = new BookMarkDataBaseUtils(context);
+                                        bookMarkDataBaseUtils.deletBookMark(bookMark.getId());
+                                        initSideMenuList(leftDrowarListViewAdapter);
+                                    }
+                                })
+
+                                .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        //Dialogを閉じる
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                        return builder.create();
+                    }
+                };
+
+                dialogFragment.show(getSupportFragmentManager(),"BookMarkDelDialogFragment");
+
+                return true;
             }
         });
 
     }
+
+
+
 }
 
 

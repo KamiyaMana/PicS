@@ -19,32 +19,42 @@ import java.util.List;
 public class IconAndTextListViewAdapter extends BaseAdapter{
 
     private Context context;
-    private List<IconAndTextData> iconAndTextDatas = new ArrayList<IconAndTextData>();
+    private List<IconAndUrlData> iconAndUrlDatas = new ArrayList<IconAndUrlData>();
 
+    //各行にセットされるリスナー
+    private OnRowLongClickListnere onRowLongClickListnere;
 
     public IconAndTextListViewAdapter(Context context){
         this.context = context;
     }
 
     /**
-     * メニューに追加
-     * @param iconAndTextData
+     * 行をクリックされたときのリスナーのセッター
+     * @param onRowLongClickListnere
      */
-    public void addMenuItem(IconAndTextData iconAndTextData){
-        this.iconAndTextDatas.add(iconAndTextData);
+    public void setOnRowLongClickListnere(OnRowLongClickListnere onRowLongClickListnere) {
+        this.onRowLongClickListnere = onRowLongClickListnere;
+    }
+
+    /**
+     * メニューに追加
+     * @param iconAndUrlData
+     */
+    public void addMenuItem(IconAndUrlData iconAndUrlData){
+        this.iconAndUrlDatas.add(iconAndUrlData);
     }
 
 
     @Override
     public int getCount() {
 
-        return this.iconAndTextDatas.size();
+        return this.iconAndUrlDatas.size();
     }
 
     @Override
     public Object getItem(int i) {
 
-        return this.iconAndTextDatas.get(i);
+        return this.iconAndUrlDatas.get(i);
     }
 
 
@@ -61,12 +71,18 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
         }
 
         ImageView iconImageView = (ImageView)view.findViewById(R.id.icon_imageview_icon_and_text_menu_row);
-        TextView textView = (TextView)view.findViewById(R.id.textview_icon_and_text_menu_row);
+        TextView textView = (TextView)view.findViewById(R.id.title_textview_icon_and_text_menu_row);
+        TextView urlTextView = (TextView) view.findViewById(R.id.url_textview_icon_and_text_menu_row);
 
-        IconAndTextData iconAndTextData = this.iconAndTextDatas.get(i);
+        IconAndUrlData iconAndUrlData = this.iconAndUrlDatas.get(i);
 
-        iconImageView.setImageDrawable(iconAndTextData.getIcon());
-        textView.setText(iconAndTextData.getText());
+        iconImageView.setImageDrawable(iconAndUrlData.getIcon());
+        textView.setText(iconAndUrlData.getText());
+        urlTextView.setText(iconAndUrlData.getUrl());
+
+        if(this.onRowLongClickListnere != null){
+            view.setOnLongClickListener(this.onRowLongClickListnere);
+        }
 
         return view;
     }
@@ -75,8 +91,40 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
      * すべてのアイテムを削除する
      */
     public void clear(){
-        iconAndTextDatas.clear();
+        iconAndUrlDatas.clear();
     }
 
+
+    //このリストビューで生成されるListViewの行に対するOnClickListnere
+    public static abstract class OnRowLongClickListnere implements View.OnLongClickListener{
+
+        /**
+         * コンストラクタ
+         */
+        public OnRowLongClickListnere(){
+
+        }
+
+        private IconAndUrlData iconAndUrlData;
+
+        public OnRowLongClickListnere(IconAndUrlData iconAndUrlData){
+            this.iconAndUrlData = iconAndUrlData;
+        }
+
+        /**
+         * 一行が押された時に呼ばれるメソッド
+         * 引数に押された行のItemデータが渡される
+         * @param iconAndUrlData
+         */
+       public abstract void onRowClick(IconAndUrlData iconAndUrlData);
+
+        @Override
+        public boolean onLongClick(View view) {
+
+            this.onRowClick(iconAndUrlData);
+
+            return false;
+        }
+    }
 
 }
