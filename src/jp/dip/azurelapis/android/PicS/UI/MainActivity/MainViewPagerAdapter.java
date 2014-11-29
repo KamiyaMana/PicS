@@ -1,4 +1,4 @@
-package jp.dip.azurelapis.android.PicS.UI;
+package jp.dip.azurelapis.android.PicS.UI.MainActivity;
 
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;

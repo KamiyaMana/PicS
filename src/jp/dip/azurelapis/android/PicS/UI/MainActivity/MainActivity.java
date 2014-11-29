@@ -1,4 +1,4 @@
-package jp.dip.azurelapis.android.PicS;
+package jp.dip.azurelapis.android.PicS.UI.MainActivity;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -25,11 +25,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import jp.dip.azurelapis.android.PicS.Datas.BookMark.BookMark;
 import jp.dip.azurelapis.android.PicS.Datas.DatabaseUtils.BookMarkDataBaseUtils;
+import jp.dip.azurelapis.android.PicS.R;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndUrlData;
-import jp.dip.azurelapis.android.PicS.UI.MainOnPageChangeListnere;
-import jp.dip.azurelapis.android.PicS.UI.MainViewPagerAdapter;
 
 import java.util.List;
 
@@ -56,6 +55,7 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+
         getWindow().requestFeature(android.view.Window.FEATURE_ACTION_MODE_OVERLAY);
 
         setContentView(R.layout.main);
@@ -220,6 +220,9 @@ public class MainActivity extends FragmentActivity {
             viewPagerAdapter.refreshImageFragmnet(url, html);
             viewPagerAdapter.refreshTextFragmnet(url, html);
             viewPagerAdapter.refreshBrowserFragmnet(url, html);
+
+            //webview fragmentの進捗バーの管理
+            viewPagerAdapter.getBrowserFragment().invisibleLoadingBar();
         }
     }
 

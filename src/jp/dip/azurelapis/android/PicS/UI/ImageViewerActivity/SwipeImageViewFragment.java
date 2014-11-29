@@ -74,7 +74,7 @@ public class SwipeImageViewFragment extends Fragment {
 
         Bitmap cacheBitmap = loader.getMemoryCache().get(imageURL);//MemoryCacheUtil.findCachedBitmapsForImageUri(finalImageUrl, ImageLoader.getInstance().getMemoryCache());
 
-        if (cacheBitmap == null) {
+        if (cacheBitmap == null && imageURL != null) {
             File imageFile = loader.getDiskCache().get(imageURL);
 
             if(imageFile.exists()) {

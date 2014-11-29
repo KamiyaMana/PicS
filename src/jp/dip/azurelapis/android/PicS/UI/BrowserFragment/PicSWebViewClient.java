@@ -28,7 +28,7 @@ public class PicSWebViewClient extends WebViewClient {
             return;
         }
 
-        onLoadFinishWebPage.onLoadFinishWebPage(url, this.getHtml());
+
     }
 
 
@@ -37,6 +37,8 @@ public class PicSWebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         view.addJavascriptInterface(this, "web");
+
+        onLoadFinishWebPage.onLoadFinishWebPage(url, this.getHtml());
 
     }
 

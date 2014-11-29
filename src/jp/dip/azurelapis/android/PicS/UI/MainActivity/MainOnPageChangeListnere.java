@@ -1,4 +1,4 @@
-package jp.dip.azurelapis.android.PicS.UI;
+package jp.dip.azurelapis.android.PicS.UI.MainActivity;
 
 import android.app.ActionBar;
 import android.support.v4.view.ViewPager;

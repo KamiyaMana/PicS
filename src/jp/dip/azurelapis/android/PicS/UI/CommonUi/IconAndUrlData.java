@@ -5,6 +5,7 @@ package jp.dip.azurelapis.android.PicS.UI.CommonUi;
  */
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 
 /**
  * アイコンとテキストの組み合わせを示すクラス
@@ -15,7 +16,7 @@ public class IconAndUrlData {
     private String text;
     private String url;
 
-    public IconAndUrlData(Drawable icon, String text, String url){
+    public IconAndUrlData(Drawable icon, String text, @Nullable String url){
         this.icon = icon;
         this.text = text;
         this.url = url;

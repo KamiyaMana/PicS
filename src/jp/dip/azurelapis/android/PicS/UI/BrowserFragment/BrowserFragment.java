@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import jp.dip.azurelapis.android.PicS.R;
 
@@ -24,6 +24,9 @@ import jp.dip.azurelapis.android.PicS.R;
 public class BrowserFragment extends Fragment {
 
     private OnLoadFinishWebPage onFinishLoadWebPage;
+
+    //webviewのロード進捗表示
+    private ProgressBar progressBar;
 
     private WebView webView;
 
@@ -52,14 +55,16 @@ public class BrowserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.browser_fragment, container, false);
+
+        //進捗プログレスバー
+        this.progressBar = (ProgressBar)view.findViewById(R.id.web_view_load_progressbar_horizontal);
+        this.progressBar.setVisibility(View.GONE);
+
         //WebViewの設定
         this.webView = (WebView)view.findViewById(R.id.webView);
         this.initWebView(this.webView);
 
         //ナビゲーションボタン関係
-        //this.backButton = (ImageButton)view.findViewById(R.id.navigation_back_button_browser_fragment);
-
-        //this.forwardButton = (ImageButton)view.findViewById(R.id.navigation_forward_button_browser_fragment);
 
         //URL表示EditText
         this.urlEditText = (EditText)getActivity().getActionBar().getCustomView().findViewById(R.id.url_text_edit_actionbar);//(EditText)view.findViewById(R.id.url_text_edit_browser_fragment);
@@ -68,8 +73,6 @@ public class BrowserFragment extends Fragment {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
 
-
-                Log.v("hhhhh" , "aaaaaa");
                 if( i == EditorInfo.IME_ACTION_DONE ||
                         keyEvent != null && keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
                     if(urlEditText.getText() != null) {
@@ -77,7 +80,7 @@ public class BrowserFragment extends Fragment {
 
                         //キーボードを隠す
                         ((InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(textView.getWindowToken(), 0);
-                        Log.v("hhhhh" , "aaaaaa");
+
                     }
                 }
 
@@ -85,42 +88,8 @@ public class BrowserFragment extends Fragment {
             }
         });
 
-
-        //URL横の進むボタン
-        //this.urlGoButton = (ImageButton)view.findViewById(R.id.url_go_button_browser_fragment);
-
-
-        //Clickリスナーの設定
-        //戻るボタン
-/*        this.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goBack();
-            }
-        });
-*/
-
-        //進むボタン
-        /*this.forwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goForward();
-            }
-        });*/
-
-
         //URL表示用EditText
         this.urlEditText.setText(this.webView.getUrl());
-
-        //URL横の進むボタン
-        /*this.urlGoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(urlEditText.getText() != null) {
-                    webView.loadUrl(urlEditText.getText().toString());
-                }
-            }
-        });*/
 
         return view;
 
@@ -139,12 +108,14 @@ public class BrowserFragment extends Fragment {
 
         webView.setWebViewClient(webViewClient);
 
-
     }
 
     public void loadPage(String url){
         this.webView.loadUrl(url);
 
+
+        //ローディングバー表示
+        this.visibleLoadingBar();
     }
 
 
@@ -193,6 +164,7 @@ public class BrowserFragment extends Fragment {
             this.urlEditText.setText(url);
             webView.clearCache(false);
         }
+
     }
 
     /**
@@ -220,4 +192,15 @@ public class BrowserFragment extends Fragment {
         return this.webView.getFavicon();
     }
 
+
+    /**
+     * ロードバーの表示
+     */
+    public void visibleLoadingBar(){
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void invisibleLoadingBar(){
+        this.progressBar.setVisibility(View.GONE);
+    }
 }
