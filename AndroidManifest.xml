@@ -36,12 +36,17 @@
         <!-- Instant　download Activity-->
         <activity android:name="jp.dip.azurelapis.android.PicS.UI.InstantDownloadActivity.InstantDownloadActivity"
                   android:configChanges="orientation|screenSize"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.Translucent"
+
+                >
+
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.APP_BROWSER" />
                 <data android:mimeType="text/*" />
             </intent-filter>
+
         </activity>
 
 

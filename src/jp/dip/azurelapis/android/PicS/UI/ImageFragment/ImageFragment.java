@@ -26,6 +26,11 @@ public class ImageFragment extends Fragment {
     ImageCardListViewAdapter imageCardListViewAdapter;
 
 
+    public ImageFragment(){
+        super();
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.image_fragment, container, false);
