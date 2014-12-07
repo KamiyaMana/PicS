@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/instant_downloader_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="19sp"
+            />
+    <include  layout="@layout/image_fragment" android:id="@+id/image_fragment_instant_downlod_fragment" />
+
+
+</LinearLayout><!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/layout/instant_download_fragment.xml -->

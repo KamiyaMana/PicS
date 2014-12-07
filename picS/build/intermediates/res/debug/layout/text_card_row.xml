@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+
+              android:background="#FFFFFF"
+        >
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_card_row_textview"
+            android:textSize="18sp"
+            android:textColor="#222222"
+            android:padding="4dp"
+            />
+
+</LinearLayout><!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/layout/text_card_row.xml -->

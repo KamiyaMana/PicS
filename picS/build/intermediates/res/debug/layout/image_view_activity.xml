@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/image_View_viewpager_swipe_image_viewr_activity"/>
+
+
+
+
+
+</LinearLayout><!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/layout/image_view_activity.xml -->

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Applications/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/21.0.2/support-annotations-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="99373741f99a0556ee293c41e8faa1ca3ae8a4e6">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/support-annotations-21.0.2-a0567a6cb8c9a535e6022259d96d85bae260298c.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-ef125c1415925fe3be86f47817ea766c9e709fae.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/exploded-aar/com.github.chrisbanes.photoview/library/1.2.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="81aa0e8e77d948204aa6754019c6f3c04dd922e3">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/pre-dexed/debug/classes-56eb13e4e24a6dc9f27179c23492f48e90cf446d.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/pre-dexed/debug/classes-def3683225c8959444e19893805789c57937808f.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="d1bf02de1c56d942e7a9d093b8610ba1ef4128e3">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/classes-308a76cd3fdf93ccda714b0bb86f61e5838e37fc.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.2/libs/internal_impl-21.0.2.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="962e8b12569c56dbdcf8367eb4eac8bb129cd18f">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/internal_impl-21.0.2-2722bcaa061f41897a2dd11731cc7f0cb0a09191.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS/main/build/libs/main.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="9dbfe8370fe9a96658b4d6a0de7ea550279016de">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS/picS/build/intermediates/pre-dexed/debug/main-34e879d96ab85954872c2ff972b858d638669cbd.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/.gradle/caches/modules-2/files-2.1/com.nostra13.universalimageloader/universal-image-loader/1.9.3/a85588bec3e2c4584d593d3f15df1677321bca72/universal-image-loader-1.9.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.3-ef94c367c90ed1fce55cb6311bf9a1d783ff48cf.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.7.3/92568d7167ce1bf9eb1fd815b022d5a2c113547a/jsoup-1.7.3.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="92568d7167ce1bf9eb1fd815b022d5a2c113547a">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/jsoup-1.7.3-fd936e62b0b3d260405ca1944b99b2affdff98e8.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS2/main/build/libs/main.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="1b439e177eab98080993ccf227c7ea222e347207">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/main-d5714ad2949299ce5704a1e783d7afeb85992720.jar" />
+    </item>
+    <item
+        jar="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/exploded-aar/com.github.chrisbanes.photoview/library/1.2.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="81aa0e8e77d948204aa6754019c6f3c04dd922e3">
+        <dex dex="/Users/kamiyama/Dropbox/Develop/PicS2/picS/build/intermediates/pre-dexed/debug/classes-6b7ef181fc22e82af6cfd7baa4bb546684c53577.jar" />
+    </item>
+
+</items>

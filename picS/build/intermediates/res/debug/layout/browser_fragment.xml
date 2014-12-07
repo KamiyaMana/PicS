@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <ProgressBar android:id="@+id/web_view_load_progressbar_horizontal"
+                 android:layout_height="wrap_content"
+                 android:layout_width="match_parent"
+                 android:indeterminate="true"
+                 android:layout_gravity="top"
+                 style="?android:attr/progressBarStyleHorizontal"
+                 android:visibility="invisible"
+            />
+
+
+    <WebView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/webView" android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout><!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/layout/browser_fragment.xml -->

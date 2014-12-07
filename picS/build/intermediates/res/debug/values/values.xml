@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">PicS</string>
+    <!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <!-- parent="Theme.AppCompat.Light.DarkActionBar" -->
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/actionBar</item>
+    </style>
+    <style name="actionBar" parent="android:Widget.ActionBar">
+        <item name="android:background">#3f51b5</item>
+    </style>
+</resources>
