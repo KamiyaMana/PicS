@@ -51,8 +51,6 @@ public class ImageCardListViewAdapter extends BaseAdapter {
     public void addImage(URL Url) {
         if (Url == null) {
             return;
-        } else {
-
         }
 
         this.imageURLs.add(Url);
@@ -161,6 +159,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         }
 
 
+
         //画像のURL
         final URL imageURL = this.imageURLs.get(i);
 
@@ -169,15 +168,11 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                 view.setVisibility(View.INVISIBLE);
 
                 return view;
-            } else {
-
             }
 
 
             ImageCardCache.imageFileURLTextView.setText(imageURL.toString());
-            //TextView textView = (TextView)view.findViewById(R.id.image_card_row_image_uri_textview);
-            ///textView.setText(imageURL.toString());
-
+           
             ImageCardCache.imageFileNameTextView.setText(UrlUtiles.getFileNameFromUrl(imageURL.getFile()));
 
 
@@ -255,11 +250,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                         if (view.getTag().equals(imageURL.toString())) {
                             if (finalRowView.getVisibility() == View.INVISIBLE
                                     && finalRowView.getTag().equals(imageURL.toString())) {
-                                //view.setLayoutParams(new ViewGroup.LayoutParams(context,ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,view.getLayoutParams()));
-                                //view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-                                //view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-                                //view.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                                 finalRowView.setVisibility(View.VISIBLE);
                             }
 
@@ -278,7 +269,6 @@ public class ImageCardListViewAdapter extends BaseAdapter {
 
                 ImageCardCache.imageView.setVisibility(View.VISIBLE);
                 ImageCardCache.imageView.refreshDrawableState();
-                //Toast.makeText(this.context, ">>> " + imageURL.toString(), Toast.LENGTH_LONG).show();
 
             }
         } catch (Exception e) {
@@ -299,6 +289,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         view.setOnClickListener(onClickListnere);
         return view;
     }
+
+
+
 
 
     /**

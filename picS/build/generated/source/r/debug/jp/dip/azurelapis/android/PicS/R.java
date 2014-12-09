@@ -19,23 +19,26 @@ public final class R {
     public static final class id {
         public static final int actioBarAppTitle=0x7f070002;
         public static final int icon_imageview_icon_and_text_menu_row=0x7f070004;
-        public static final int image_View_viewpager_swipe_image_viewr_activity=0x7f07000c;
+        public static final int image_View_viewpager_swipe_image_viewr_activity=0x7f07000f;
         public static final int image_card_row_imageView=0x7f070007;
         public static final int image_card_row_image_filename_textview=0x7f070008;
         public static final int image_card_row_image_filesize_textview=0x7f070009;
         public static final int image_card_row_image_uri_textview=0x7f07000a;
-        public static final int image_fragment_imagecard_listView=0x7f07000b;
-        public static final int image_fragment_instant_downlod_fragment=0x7f07000e;
-        public static final int image_view_swipe_image_view_fragment=0x7f070015;
-        public static final int instant_downloader_text=0x7f07000d;
-        public static final int left_drawer=0x7f070011;
-        public static final int left_drawer_menu_listview=0x7f070013;
-        public static final int left_drawer_titile_textview=0x7f070012;
-        public static final int left_side_menu_drawer_layout=0x7f07000f;
-        public static final int main_view_pager=0x7f070010;
-        public static final int menulistview_popup_photoview_menu=0x7f070014;
-        public static final int text_card_row_textview=0x7f070016;
-        public static final int text_fragment_imagecard_listView=0x7f070017;
+        public static final int image_fragment_image_grid_view=0x7f07000e;
+        public static final int image_fragment_imagecard_listView=0x7f07000d;
+        public static final int image_fragment_instant_downlod_fragment=0x7f070011;
+        public static final int image_grid_view_change_image_button_image_fragment=0x7f07000b;
+        public static final int image_list_change_image_button_image_fragment=0x7f07000c;
+        public static final int image_view_swipe_image_view_fragment=0x7f070018;
+        public static final int instant_downloader_url_text=0x7f070010;
+        public static final int left_drawer=0x7f070014;
+        public static final int left_drawer_menu_listview=0x7f070016;
+        public static final int left_drawer_titile_textview=0x7f070015;
+        public static final int left_side_menu_drawer_layout=0x7f070012;
+        public static final int main_view_pager=0x7f070013;
+        public static final int menulistview_popup_photoview_menu=0x7f070017;
+        public static final int text_card_row_textview=0x7f070019;
+        public static final int text_fragment_imagecard_listView=0x7f07001a;
         public static final int title_textview_icon_and_text_menu_row=0x7f070005;
         public static final int url_text_edit_actionbar=0x7f070003;
         public static final int url_textview_icon_and_text_menu_row=0x7f070006;
@@ -58,6 +61,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
+        public static final int instant_download_dialog_title=0x7f050001;
     }
     public static final class style {
         public static final int AppTheme=0x7f060000;

@@ -7,6 +7,37 @@
               android:background="#444444"
         >
 
+
+    <!--メニュー-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="right"
+        android:gravity="right"
+        >
+
+        <ImageButton
+            android:id="@+id/image_grid_view_change_image_button_image_fragment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_dialog_dialer"
+            android:layout_gravity="right"
+            android:padding="6dp"
+            />
+
+        <ImageButton
+            android:id="@+id/image_list_change_image_button_image_fragment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:layout_gravity="right"
+            android:padding="6dp"
+            />
+
+    </LinearLayout>
+
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,6 +48,27 @@
             android:background="#444444"
             android:divider="#444444"
             android:padding="10dp"
-
+            android:visibility="visible"
             />
+
+    <GridView
+        android:id="@+id/image_fragment_image_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="12dp"
+        android:fadingEdge="none"
+        android:background="#444444"
+        android:divider="#444444"
+        android:padding="10dp"
+        android:numColumns="auto_fit"
+        android:columnWidth="150dp"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:visibility="gone"
+        />
+
+
+
+
 </LinearLayout>

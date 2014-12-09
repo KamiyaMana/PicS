@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import jp.dip.azurelapis.android.PicS.R;
@@ -33,7 +36,14 @@ public class InstantDownloadActivity extends FragmentActivity {
 
 
     private ListView imageCardListView;
+    private GridView imageGridView;
+
     private ImageCardListViewAdapter imageCardListViewAdapter;
+
+
+    //メニュー関連
+    private ImageButton imageGridViewChangeButton;
+    private ImageButton imageListViewChangeButton;
 
 
     @Override
@@ -60,10 +70,38 @@ public class InstantDownloadActivity extends FragmentActivity {
 
                 dialog.setContentView(R.layout.instant_download_fragment);
 
+                dialog.setTitle(R.string.instant_download_dialog_title);
+
+
                 View view = dialog.findViewById(R.id.image_fragment_instant_downlod_fragment);
+
+                imageGridViewChangeButton = (ImageButton)view.findViewById(R.id.image_grid_view_change_image_button_image_fragment);
+                imageGridViewChangeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imageGridViewShow();
+                    }
+                });
+
+                imageListViewChangeButton = (ImageButton)view.findViewById(R.id.image_list_change_image_button_image_fragment);
+                imageListViewChangeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        imageListViewShow();
+                    }
+                });
+
                 imageCardListView = (ListView)view.findViewById(R.id.image_fragment_imagecard_listView);
+                imageCardListView.setVisibility(View.VISIBLE);
+
+                imageGridView = (GridView)view.findViewById(R.id.image_fragment_image_grid_view);
+                imageGridView.setVisibility(View.GONE);
+
                 imageCardListViewAdapter = new ImageCardListViewAdapter(getActivity());
                 imageCardListView.setAdapter(imageCardListViewAdapter);
+
+                TextView urlTextView = (TextView)dialog.findViewById(R.id.instant_downloader_url_text);
+                urlTextView.setText(url);
 
                 LoadUrlPageImagese loadUrlPageImagese = new LoadUrlPageImagese();
                 loadUrlPageImagese.execute(url);
@@ -120,6 +158,33 @@ public class InstantDownloadActivity extends FragmentActivity {
         }
     }
 
+
+    /**
+     * イメージのサムネイルをグリッドビューで表示に切り替える
+     */
+    private void imageGridViewShow(){
+
+        this.imageCardListView.setVisibility(View.GONE);
+        this.imageGridView.setVisibility(View.VISIBLE);
+
+        this.imageGridView.setAdapter(this.imageCardListViewAdapter);
+        this.imageCardListView.setAdapter(null);
+
+    }
+
+
+    /**
+     * イメージのサムネイルをリストビューで表示に切り替える
+     */
+    private void imageListViewShow(){
+
+        this.imageGridView.setVisibility(View.GONE);
+        this.imageCardListView.setVisibility(View.VISIBLE);
+
+
+        this.imageCardListView.setAdapter(this.imageCardListViewAdapter);
+        this.imageGridView.setAdapter(null);
+    }
 
 
 }

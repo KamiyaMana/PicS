@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PicS</string>
+    <string name="instant_download_dialog_title">インスタントダウンローダー</string>
 </resources>

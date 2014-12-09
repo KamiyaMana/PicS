@@ -3,6 +3,7 @@
     <!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">PicS</string>
+    <string name="instant_download_dialog_title">インスタントダウンローダー</string>
     <!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo">
