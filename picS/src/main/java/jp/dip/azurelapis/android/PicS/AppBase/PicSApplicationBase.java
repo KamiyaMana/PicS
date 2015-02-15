@@ -2,7 +2,9 @@ package jp.dip.azurelapis.android.PicS.AppBase;
 
 import android.app.Application;
 import com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -30,13 +32,12 @@ public class PicSApplicationBase extends Application {
 
         // 画像キャッシュのグローバル設定の生成と初期化を行う
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                .threadPoolSize(2)
+                .threadPoolSize(8)
                 .threadPriority(Thread.NORM_PRIORITY - 1)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .memoryCache(new WeakMemoryCache())//new LRULimitedMemoryCache(5 * 1024 * 1024))//new UsingFreqLimitedMemoryCache(5 * 1024 * 1024))//5MBキャッシュ
-                .denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new LRULimitedMemoryCache(5 * 1024 * 1024))//new UsingFreqLimitedMemoryCache(5 * 1024 * 1024))//5MBキャッシュ
                         //.discCacheExtraOptions(720, 480, Bitmap.CompressFormat.JPEG, 75)
-                .memoryCacheSize(5)//3 * 1024 * 1024)
+                .memoryCacheSize(5 * 1024 * 1024)
                 .diskCache(new LimitedAgeDiscCache(getCacheDir(), 10 * 1024 * 1024))//秒単位で寿命指定する
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
                 .diskCacheFileCount(5000)

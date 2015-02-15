@@ -3,30 +3,34 @@ package jp.dip.azurelapis.android.PicS.UI.ImageFragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import jp.dip.azurelapis.android.PicS.R;
-import jp.dip.azurelapis.android.PicS.Util.UrlUtiles;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.dip.azurelapis.android.PicS.ImageFilter.ImageFilter;
+import jp.dip.azurelapis.android.PicS.R;
+import jp.dip.azurelapis.android.PicS.Util.UrlUtiles;
+
 /**
  * Created by kamiyama on 2014/07/12.
  */
-public class ImageCardListViewAdapter extends BaseAdapter {
+public class ImageCardListViewAdapter extends BaseAdapter implements ImageFilterble{
+
+
+    private int samplingScale = 1;//画像の圧縮読み込みの割合
 
     private List<URL> imageURLs = new ArrayList<URL>();
     private List<String> imageUrlStrings = new ArrayList<String>();
@@ -34,6 +38,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
     private Context context;
 
     private int lastIndex = -1;
+
+    //イメージフィルタ判定モジュール
+    private List<ImageFilter> imageFilters = new ArrayList<ImageFilter>();
 
 
     /**
@@ -125,7 +132,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
 
 
     @Override
-    public synchronized int getCount() {
+    public int getCount() {
         return this.imageURLs.size();
     }
 
@@ -140,9 +147,9 @@ public class ImageCardListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public synchronized View getView(int i, View view, final ViewGroup viewGroup) {
+    public View getView(int i, View view, final ViewGroup viewGroup) {
 
-
+        Log.d("fffffffffff","getview");
         if (view == null) {
             view = View.inflate(this.context, R.layout.image_card_row, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
@@ -159,7 +166,6 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         }
 
 
-
         //画像のURL
         final URL imageURL = this.imageURLs.get(i);
 
@@ -172,7 +178,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
 
 
             ImageCardCache.imageFileURLTextView.setText(imageURL.toString());
-           
+
             ImageCardCache.imageFileNameTextView.setText(UrlUtiles.getFileNameFromUrl(imageURL.getFile()));
 
 
@@ -180,34 +186,45 @@ public class ImageCardListViewAdapter extends BaseAdapter {
             ImageLoader loader = ImageLoader.getInstance();
 
 
-            final TextView finalImageFIleSizeTextView = (TextView) view.findViewById(R.id.image_card_row_image_filesize_textview);
+            final TextView finalImageFIleSizeTextView = ImageCardCache.imageFileSizeTextView;
             Bitmap cacheBitmap = loader.getMemoryCache().get(imageURL.toString());//MemoryCacheUtil.findCachedBitmapsForImageUri(finalImageUrl, ImageLoader.getInstance().getMemoryCache());
 
             final ImageView imageView = (ImageView) view.findViewById(R.id.image_card_row_imageView);
+          /*
             if (cacheBitmap == null) {
                 File imageFile = loader.getDiskCache().get(imageURL.toString());
                 if (imageFile.exists()) {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
 
-                    //options.inSampleSize = 4;
+                    options.inSampleSize = this.samplingScale;
 
                     cacheBitmap = BitmapFactory.decodeFile(imageFile.toString(), options);
                 }
                 //BitmapDrawable drawableBitmap = new BitmapDrawable();
             }
+            */
 
             imageView.setTag(imageURL.toString());
             if (cacheBitmap != null) {
+
                 imageView.setImageBitmap(cacheBitmap);
+                if(throwImageFiter(cacheBitmap)){
+                    imageView.setVisibility(View.VISIBLE);
+                }else {
+                    imageView.setVisibility(View.GONE);
+                }
+
+                Log.d("fffffffffff", "gggg");
+
                 finalImageFIleSizeTextView.setText((cacheBitmap.getByteCount() / 1000f) + " KB");
 
             } else {
 
                 BitmapFactory.Options options = new BitmapFactory.Options();
-                //options.inSampleSize = 4;
-                options.inScaled = true;
-                options.inPurgeable = true;
+                options.inSampleSize = this.samplingScale;
+                options.inScaled = false;//true;
+                options.inPurgeable = false;//true;
                 options.inPreferredConfig = Bitmap.Config.RGB_565;
 
                 DisplayImageOptions dispConf = new DisplayImageOptions.Builder()
@@ -215,7 +232,7 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                         .showImageOnFail(android.R.drawable.stat_notify_error)
                         .bitmapConfig(Bitmap.Config.RGB_565)
                         .resetViewBeforeLoading(true)
-                        .decodingOptions(options)
+                        //.decodingOptions(options)
                                 //.imageScaleType(ImageScaleType.EXACTLY)
                                 //.displayer(new FadeInBitmapDisplayer(300))
                         .cacheOnDisk(true)
@@ -235,14 +252,16 @@ public class ImageCardListViewAdapter extends BaseAdapter {
 
                     @Override
                     public void onLoadingFailed(String s, View view, FailReason failReason) {
+                        /*
                         if (view.getTag().equals(imageURL.toString())) {
+
                             if (finalRowView.getVisibility() == View.VISIBLE
                                     && finalRowView.getTag().equals(imageURL.toString())) {
                                 finalRowView.setVisibility(View.INVISIBLE);
                             } else {
                             }
                         }
-
+                        */
                     }
 
                     @Override
@@ -251,11 +270,25 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                             if (finalRowView.getVisibility() == View.INVISIBLE
                                     && finalRowView.getTag().equals(imageURL.toString())) {
 
-                                finalRowView.setVisibility(View.VISIBLE);
+                                if(throwImageFiter(bitmap)){
+                                    finalRowView.setVisibility(View.VISIBLE);
+                                }else {
+                                    finalRowView.setVisibility(View.GONE);
+                                }
+
                             }
 
                         }
-                        finalImageFIleSizeTextView.setText((bitmap.getByteCount() / 1000f) + " byte");
+
+                        Log.d("fffffffffff", "RRRRRR "+ finalRowView.getVisibility() +"x : " + bitmap.getWidth() + "  y:" + bitmap.getHeight());
+
+                        if(throwImageFiter(bitmap)){
+                            finalRowView.setVisibility(View.VISIBLE);
+                        }else {
+                            //finalRowView.setVisibility(View.GONE);
+                        }
+
+                        finalImageFIleSizeTextView.setText("x " + bitmap.getWidth() + "y " + bitmap.getHeight() +" "+ ( bitmap.getByteCount() / 1000f) + " byte");
 
 
                     }
@@ -267,8 +300,8 @@ public class ImageCardListViewAdapter extends BaseAdapter {
                 });
 
 
-                ImageCardCache.imageView.setVisibility(View.VISIBLE);
-                ImageCardCache.imageView.refreshDrawableState();
+                // ImageCardCache.imageView.setVisibility(View.VISIBLE);
+                //ImageCardCache.imageView.refreshDrawableState();
 
             }
         } catch (Exception e) {
@@ -276,13 +309,14 @@ public class ImageCardListViewAdapter extends BaseAdapter {
         }
 
         //アニメーション
+/*
         if (i > this.lastIndex) {
             this.lastIndex = i;
             Animation animation = AnimationUtils.loadAnimation(this.context, R.anim.card_fade_in);
             view.startAnimation(animation);
         }
 
-
+*/
         //タッチListenerの設定
 
         ImageCardTouchListnere onClickListnere = new ImageCardTouchListnere(this.context, imageURL.toString(), this.imageUrlStrings);
@@ -293,6 +327,52 @@ public class ImageCardListViewAdapter extends BaseAdapter {
 
 
 
+    /**
+     * 画像のサンプリングレートをセットする
+     *
+     * @param samplingScale
+     */
+    public void setSamplingScale(int samplingScale) {
+        this.samplingScale = samplingScale;
+    }
+
+
+    /**
+     * イメージフィルタを通す
+     * @param bitmap　フィルタリング対象の画像
+     * @return
+     */
+    @Override
+    public boolean throwImageFiter(Bitmap bitmap) {
+
+        boolean ret = true;
+
+        //ImageFilterを取り出しすべてのFilterを通し、OKのならTrueを返す
+        for(ImageFilter imageFilter : this.imageFilters){
+
+            ret = imageFilter.isAllow(bitmap);
+
+            //System.out.println("image size filter : x " + bitmap.getWidth() + " y : " + bitmap.getHeight());
+
+            //Filter判定Falseの場合返す
+            if(!ret){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * イメージFilterを追加する
+     * @param imageFilter
+     */
+    public void addImageFilter(ImageFilter imageFilter){
+
+        if(imageFilter != null) {
+            this.imageFilters.add(imageFilter);
+        }
+    }
 
     /**
      * 参照へのCache

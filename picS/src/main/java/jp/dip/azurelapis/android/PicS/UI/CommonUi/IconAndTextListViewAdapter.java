@@ -1,6 +1,8 @@
 package jp.dip.azurelapis.android.PicS.UI.CommonUi;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,7 +21,7 @@ import java.util.List;
 public class IconAndTextListViewAdapter extends BaseAdapter{
 
     private Context context;
-    private List<IconAndUrlData> iconAndUrlDatas = new ArrayList<IconAndUrlData>();
+    private List<IconAndTextData> iconAndTextDatas = new ArrayList<IconAndTextData>();
 
     //各行にセットされるリスナー
     private OnRowLongClickListnere onRowLongClickListnere;
@@ -27,6 +29,9 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
     public IconAndTextListViewAdapter(Context context){
         this.context = context;
     }
+
+    public Bitmap defaultIconImageBitmap;
+    public Drawable defaultIconImageDrawable;
 
     /**
      * 行をクリックされたときのリスナーのセッター
@@ -38,23 +43,23 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
 
     /**
      * メニューに追加
-     * @param iconAndUrlData
+     * @param iconAndTextData
      */
-    public void addMenuItem(IconAndUrlData iconAndUrlData){
-        this.iconAndUrlDatas.add(iconAndUrlData);
+    public void addMenuItem(IconAndTextData iconAndTextData){
+        this.iconAndTextDatas.add(iconAndTextData);
     }
 
 
     @Override
     public int getCount() {
 
-        return this.iconAndUrlDatas.size();
+        return this.iconAndTextDatas.size();
     }
 
     @Override
     public Object getItem(int i) {
 
-        return this.iconAndUrlDatas.get(i);
+        return this.iconAndTextDatas.get(i);
     }
 
 
@@ -74,11 +79,20 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
         TextView textView = (TextView)view.findViewById(R.id.title_textview_icon_and_text_menu_row);
         TextView urlTextView = (TextView) view.findViewById(R.id.url_textview_icon_and_text_menu_row);
 
-        IconAndUrlData iconAndUrlData = this.iconAndUrlDatas.get(i);
+        IconAndTextData iconAndTextData = this.iconAndTextDatas.get(i);
 
-        iconImageView.setImageDrawable(iconAndUrlData.getIcon());
-        textView.setText(iconAndUrlData.getText());
-        urlTextView.setText(iconAndUrlData.getUrl());
+        if(iconAndTextData.getIcon() != null) {
+            iconImageView.setImageDrawable(iconAndTextData.getIcon());
+        }else if(defaultIconImageBitmap != null){
+            iconImageView.setImageBitmap(defaultIconImageBitmap);
+        }else if(defaultIconImageDrawable != null){
+            iconImageView.setImageDrawable(defaultIconImageDrawable);
+        }else{
+            iconImageView.setVisibility(View.INVISIBLE);
+        }
+
+        textView.setText(iconAndTextData.getText());
+        urlTextView.setText(iconAndTextData.getSubText());
 
         if(this.onRowLongClickListnere != null){
             view.setOnLongClickListener(this.onRowLongClickListnere);
@@ -91,7 +105,7 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
      * すべてのアイテムを削除する
      */
     public void clear(){
-        iconAndUrlDatas.clear();
+        iconAndTextDatas.clear();
     }
 
 
@@ -105,26 +119,46 @@ public class IconAndTextListViewAdapter extends BaseAdapter{
 
         }
 
-        private IconAndUrlData iconAndUrlData;
+        private IconAndTextData iconAndTextData;
 
-        public OnRowLongClickListnere(IconAndUrlData iconAndUrlData){
-            this.iconAndUrlData = iconAndUrlData;
+        public OnRowLongClickListnere(IconAndTextData iconAndTextData){
+            this.iconAndTextData = iconAndTextData;
         }
 
         /**
          * 一行が押された時に呼ばれるメソッド
          * 引数に押された行のItemデータが渡される
-         * @param iconAndUrlData
+         * @param iconAndTextData
          */
-       public abstract void onRowClick(IconAndUrlData iconAndUrlData);
+       public abstract void onRowClick(IconAndTextData iconAndTextData);
 
         @Override
         public boolean onLongClick(View view) {
 
-            this.onRowClick(iconAndUrlData);
+            this.onRowClick(iconAndTextData);
 
             return false;
         }
     }
+
+
+    /**
+     * iconの設定値なしの場合に表示されるデフォルトアイコン
+     * @param defaultIconImage
+     */
+    public void setDefaultIconImage(Drawable defaultIconImage) {
+        this.defaultIconImageDrawable = defaultIconImage;
+        this.defaultIconImageBitmap = null;
+    }
+
+    /**
+     * iconの設定値なしの場合に表示されるデフォルトアイコン
+     * @param defaultIconImage
+     */
+    public void setDefaultIconImage(Bitmap defaultIconImage) {
+        this.defaultIconImageDrawable = null;
+        this.defaultIconImageBitmap =  defaultIconImage;
+    }
+
 
 }

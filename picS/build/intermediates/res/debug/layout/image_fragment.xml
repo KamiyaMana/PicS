@@ -18,6 +18,19 @@
         android:gravity="right"
         >
 
+
+        <ImageButton
+            android:id="@+id/image_filter_change_image_button_image_fragment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@android:drawable/ic_menu_recent_history"
+            android:layout_gravity="right"
+            android:padding="6dp"
+            android:background="#00000000"
+            />
+
+
+
         <ImageButton
             android:id="@+id/image_grid_view_change_image_button_image_fragment"
             android:layout_width="48dp"
@@ -25,15 +38,17 @@
             android:src="@android:drawable/ic_dialog_dialer"
             android:layout_gravity="right"
             android:padding="6dp"
+            android:background="#00000000"
             />
 
         <ImageButton
             android:id="@+id/image_list_change_image_button_image_fragment"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@android:drawable/ic_dialog_dialer"
+            android:src="@android:drawable/ic_menu_sort_by_size"
             android:layout_gravity="right"
             android:padding="6dp"
+            android:background="#00000000"
             />
 
     </LinearLayout>

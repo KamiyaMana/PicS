@@ -10,7 +10,7 @@
             android:layout_height="40dp"
             android:layout_width="40dp"
             android:paddingRight="8dp"
-            android:src="@android:drawable/btn_star_big_off"
+
             />
 
     <LinearLayout

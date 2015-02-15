@@ -28,7 +28,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import jp.dip.azurelapis.android.PicS.R;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndUrlData;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -217,7 +217,7 @@ public class SwipeImageViewFragment extends Fragment {
             Resources res = getResources();
             Bitmap saveIcon = BitmapFactory.decodeResource(res, android.R.drawable.ic_menu_save);
 
-            iconAndTextListViewAdapter.addMenuItem(new IconAndUrlData(new BitmapDrawable(saveIcon),
+            iconAndTextListViewAdapter.addMenuItem(new IconAndTextData(new BitmapDrawable(saveIcon),
                     IMAGE_DOWNLOAD_MENU_TEXT, null));
             menuListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override

@@ -28,7 +28,7 @@ import jp.dip.azurelapis.android.PicS.Datas.DatabaseUtils.BookMarkDataBaseUtils;
 import jp.dip.azurelapis.android.PicS.R;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndUrlData;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
 
 import java.util.List;
 
@@ -70,6 +70,7 @@ public class MainActivity extends FragmentActivity {
 
         IconAndTextListViewAdapter iconAndTextListViewAdapter = new IconAndTextListViewAdapter(this);
         this.leftDrowarListViewAdapter = iconAndTextListViewAdapter;
+        iconAndTextListViewAdapter.setDefaultIconImage(getResources().getDrawable(android.R.drawable.star_big_off));
 
         this.initSideMenuList(this.leftDrowarListViewAdapter);
         this.initSideMenuListView(this.leftDrawarMenuListView);
@@ -266,8 +267,8 @@ public class MainActivity extends FragmentActivity {
                         icon = new BitmapDrawable(iconBitmap);
                     }
 
-                    IconAndUrlData iconAndUrlData = new IconAndUrlData(icon, menuText, menuUrl);
-                    menuListAdapter.addMenuItem(iconAndUrlData);
+                    IconAndTextData iconAndTextData = new IconAndTextData(icon, menuText, menuUrl);
+                    menuListAdapter.addMenuItem(iconAndTextData);
                 }
 
                 return null;
