@@ -2,6 +2,12 @@
 buildscript {
     repositories {
         jcenter()
+
+        def androidHome = System.getenv("ANDROID_HOME")
+        mavenCentral()
+        maven {
+            url "$androidHome/extras/android/m2repository/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
