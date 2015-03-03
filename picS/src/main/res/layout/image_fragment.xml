@@ -19,6 +19,7 @@
         >
 
 
+        <!--
         <ImageButton
             android:id="@+id/image_filter_change_image_button_image_fragment"
             android:layout_width="48dp"
@@ -28,7 +29,7 @@
             android:padding="6dp"
             android:background="#00000000"
             />
-
+-->
 
 
         <ImageButton
@@ -40,6 +41,7 @@
             android:padding="6dp"
             android:background="#00000000"
             />
+
 
         <ImageButton
             android:id="@+id/image_list_change_image_button_image_fragment"

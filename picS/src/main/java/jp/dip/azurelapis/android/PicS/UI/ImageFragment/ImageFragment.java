@@ -32,7 +32,7 @@ public class ImageFragment extends Fragment {
     private ImageCardListViewAdapter imageCardListViewAdapter;
 
     //イメージフィルタメニュー関連
-    private ImageButton imageFilterButton;
+    //private ImageButton imageFilterButton;
 
     //メニュー関連
     private ImageButton imageGridViewChangeButton;
@@ -76,6 +76,7 @@ public class ImageFragment extends Fragment {
 
 
         //メニュー関連
+
         this.imageListViewChangeButton = (ImageButton)view.findViewById(R.id.image_list_change_image_button_image_fragment);
         this.imageListViewChangeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +95,7 @@ public class ImageFragment extends Fragment {
 
 
         //イメージフィルター
+        /*
         this.imageFilterButton = (ImageButton)view.findViewById(R.id.image_filter_change_image_button_image_fragment);
         this.imageFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,8 @@ public class ImageFragment extends Fragment {
                 imageFilterSelecterFragmentDialog.show(getActivity().getSupportFragmentManager(),"image_filter_selecter_dialog");
             }
         });
+        */
+
 
 
 
