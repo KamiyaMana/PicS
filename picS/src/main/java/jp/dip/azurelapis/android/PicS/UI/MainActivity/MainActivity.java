@@ -14,28 +14,36 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.*;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebIconDatabase;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import java.util.List;
+
 import jp.dip.azurelapis.android.PicS.Datas.BookMark.BookMark;
 import jp.dip.azurelapis.android.PicS.Datas.DatabaseUtils.BookMarkDataBaseUtils;
 import jp.dip.azurelapis.android.PicS.R;
 import jp.dip.azurelapis.android.PicS.UI.BrowserFragment.OnLoadFinishWebPage;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
-
-import java.util.List;
+import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
 
 public class MainActivity extends FragmentActivity {
 
     //サイドメニュー
     private DrawerLayout lefitSideDrawarLayoyt;
+    private ActionBarDrawerToggle actionbatTogle;
+
     private LinearLayout leftDrawableLinearLayout;
     private ListView leftDrawarMenuListView;
     private IconAndTextListViewAdapter leftDrowarListViewAdapter;
@@ -101,6 +109,41 @@ public class MainActivity extends FragmentActivity {
         actionBar.setCustomView(R.layout.browser_navigation);
 
         this.mainViewPager.setOnPageChangeListener(new MainOnPageChangeListnere(actionBar));
+
+
+
+
+
+        //サイドメニューのアプリアイコンによる開閉設定
+        this.actionbatTogle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                lefitSideDrawarLayoyt,         /* DrawerLayout object */
+                R.drawable.pics_icon,  /* nav drawer icon to replace 'Up' caret */
+                R.string.side_menu_toggle_open,  /* "open drawer" description */
+               R.string.side_menu_toggle_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(R.string.app_name);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(R.string.app_name);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        this.lefitSideDrawarLayoyt.setDrawerListener(actionbatTogle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+
+
 
     }
 

@@ -1,38 +1,29 @@
 package jp.dip.azurelapis.android.PicS.UI.ImageViewerActivity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import jp.dip.azurelapis.android.PicS.R;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextData;
-import jp.dip.azurelapis.android.PicS.UI.CommonUi.IconAndTextListViewAdapter;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.io.File;
+
+import jp.dip.azurelapis.android.PicS.R;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by kamiyama on 2014/07/21.
@@ -174,7 +165,11 @@ public class SwipeImageViewFragment extends Fragment {
         this.photViewAttacher.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                DialogFragment dialog = new popuoMenu();
+                DialogFragment dialog = new PopupMenu();
+
+                Bundle imageUrlParm = new Bundle();
+                imageUrlParm.putString(PopupMenu.IMAGE_URL_ARG, imageUrl);
+                dialog.setArguments(imageUrlParm);
                 dialog.show(getFragmentManager(), "imagemenu");
                 return false;
             }
@@ -195,81 +190,6 @@ public class SwipeImageViewFragment extends Fragment {
         return this.imageView;
     }
 
-    /**
-     * 画像長押しで表示されるポップアップメニュー
-     */
-    public class popuoMenu extends DialogFragment {
-
-        private static final String IMAGE_DOWNLOAD_MENU_TEXT = "画像を保存";
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            //ポップアップメニューに表示する内容を表示するView
-            View menuView = View.inflate(getActivity(), R.layout.popup_photoview_menu, null);
-
-            //メニュー一覧を表示するリストビュー
-            ListView menuListView = (ListView) menuView.findViewById(R.id.menulistview_popup_photoview_menu);
-
-            IconAndTextListViewAdapter iconAndTextListViewAdapter = new IconAndTextListViewAdapter(getActivity());
-
-            Resources res = getResources();
-            Bitmap saveIcon = BitmapFactory.decodeResource(res, android.R.drawable.ic_menu_save);
-
-            iconAndTextListViewAdapter.addMenuItem(new IconAndTextData(new BitmapDrawable(saveIcon),
-                    IMAGE_DOWNLOAD_MENU_TEXT, null));
-            menuListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (i == 0) {
-                        //画像を保存するメニューが押された
-                        Uri uri = Uri.parse(imageUrl);
-                        DownloadManager.Request request = new DownloadManager.Request(uri);
-
-                        //保存ファイル名
-                        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.length());
-                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-                        request.setTitle(fileName);
-
-                        //DLに使う回線種別
-                        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE
-                                | DownloadManager.Request.NETWORK_WIFI);
-
-                        request.setShowRunningNotification(true);
-                        request.setVisibleInDownloadsUi(true);
-
-                        DownloadManager downLoadManager = (DownloadManager) getActivity().getSystemService(Activity.DOWNLOAD_SERVICE);
-                        downLoadManager.enqueue(request);
-
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-            menuListView.setAdapter(iconAndTextListViewAdapter);
-
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            // タイトル
-            builder.setTitle("画像メニュー");
-            // メニューのリスト
-            builder.setView(menuView);
-            // 閉じるボタン
-            builder.setPositiveButton("閉じる", null);
-
-            Dialog dialog = builder.create();
-
-
-            return dialog;
-            //return super.onCreateDialog(savedInstanceState);
-        }
-    }
 
     @Override
     public void onDestroyView() {

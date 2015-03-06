@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">PicS</string>
     <string name="instant_download_dialog_title">インスタントダウンローダー</string>
+    <string name="side_menu_toggle_open">サイドメニューオープン</string>
+    <string name="side_menu_toggle_close">サイドメニューオープン</string>
 </resources>

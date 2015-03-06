@@ -4,6 +4,8 @@
     <eat-comment/>
     <string name="app_name">PicS</string>
     <string name="instant_download_dialog_title">インスタントダウンローダー</string>
+    <string name="side_menu_toggle_close">サイドメニューオープン</string>
+    <string name="side_menu_toggle_open">サイドメニューオープン</string>
     <!-- From: file:/Users/kamiyama/Dropbox/Develop/PicS/picS/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Holo">

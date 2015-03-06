@@ -15,7 +15,7 @@
         android:name="jp.dip.azurelapis.android.PicS.AppBase.PicSApplicationBase"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/pics_icon"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme" >
