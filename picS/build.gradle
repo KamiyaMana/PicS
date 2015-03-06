@@ -12,14 +12,15 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
         }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_7
+
     }
     dexOptions {
     }
@@ -31,10 +32,7 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'org.jsoup:jsoup:1.7.3'
-
     compile 'com.android.support:support-v13:21.0.3'
-
-
 }
 
 

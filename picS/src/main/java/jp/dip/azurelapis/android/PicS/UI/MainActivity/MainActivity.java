@@ -143,8 +143,6 @@ public class MainActivity extends FragmentActivity {
         getActionBar().setHomeButtonEnabled(true);
 
 
-
-
     }
 
 

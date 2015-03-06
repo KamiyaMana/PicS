@@ -10,9 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import jp.dip.azurelapis.android.PicS.R;
 
 import java.util.List;
+
+import jp.dip.azurelapis.android.PicS.R;
 
 /**
  * Created by kamiyama on 2014/07/21.
@@ -51,12 +52,12 @@ public class SwipeImageViewActivity extends FragmentActivity {
         this.imageViewPager.setAdapter(this.viewpagerAdapter);
 
         //表示画像を決定する
-        String activeimageUrl = getIntent().getStringExtra(ACTIVE_IMAGE_URL);
+        String activeImageUrl = getIntent().getStringExtra(ACTIVE_IMAGE_URL);
         String tempImageUrl;
         for (int i = 0; i < imageUrls.size(); i++) {
 
             tempImageUrl = imageUrls.get(i);
-            if (activeimageUrl.equals(tempImageUrl)) {
+            if (activeImageUrl.equals(tempImageUrl)) {
                 this.imageViewPager.setCurrentItem(i);
                 break;
             }
